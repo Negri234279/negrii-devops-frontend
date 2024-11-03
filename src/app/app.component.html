@@ -1,7 +1,32 @@
-<p>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur accusamus quibusdam cupiditate
-    nobis excepturi dignissimos animi, voluptates accusantium ad libero non modi iste minus
-    repellendus aliquid doloremque, assumenda quisquam quasi.
-</p>
+<header class="bg-gray-900 text-white p-4 flex items-center justify-center shadow-md">
+    <a routerLink="/" aria-label="Home page" class="flex items-center space-x-4">
+        <img
+            src="assets/Rick-And-Morty-Logo.png"
+            width="150"
+            height="auto"
+            alt="Rick and Morty logo"
+            class="hover:opacity-90 transition-opacity duration-300"
+        />
+        <span class="text-xl font-semibold hidden md:inline-block">Rick and Morty API</span>
+    </a>
+</header>
 
-<router-outlet />
+<nav class="bg-slate-200 p-4 shadow-sm">
+    <ul class="flex gap-6 justify-center text-gray-800 font-medium">
+        @for (link of headerLinks; track link.url) {
+            <li class="hover:text-red-700 transition-colors">
+                <a
+                    routerLink="{{ link.url }}"
+                    routerLinkActive="text-red-700"
+                    class="hover:underline focus:outline-none focus:ring-2 focus:ring-red-700"
+                >
+                    {{ link.text }}
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
+
+<main [ngClass]="{ 'p-6 container mx-auto': !isNotFound }">
+    <router-outlet></router-outlet>
+</main>
