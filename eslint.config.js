@@ -3,6 +3,7 @@ const eslint = require('@eslint/js')
 const tseslint = require('typescript-eslint')
 const angular = require('angular-eslint')
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended')
+const html = require('eslint-plugin-html')
 
 module.exports = tseslint.config(
     {
@@ -44,11 +45,27 @@ module.exports = tseslint.config(
                     ignoreRestSiblings: true,
                 },
             ],
+            'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
         },
     },
     {
         files: ['**/*.html'],
-        extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
-        rules: {},
+        extends: [
+            ...angular.configs.templateRecommended,
+            ...angular.configs.templateAccessibility,
+            eslintPluginPrettierRecommended,
+        ],
+        plugins: {
+            html,
+        },
+        rules: {
+            'prettier/prettier': [
+                'error',
+                {
+                    htmlWhitespaceSensitivity: 'ignore',
+                    bracketSameLine: false,
+                },
+            ],
+        },
     }
 )
