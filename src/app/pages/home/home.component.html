@@ -1,0 +1,39 @@
+<div class="text-white min-h-screen">
+    <!-- Hero Section -->
+    <section
+        class="hero flex flex-col items-center justify-center py-20 px-4 text-center bg-cover bg-center"
+        style="background-image: url('/assets/portal-bg.jpg')"
+    >
+        <h1 class="text-4xl font-bold mb-4">Welcome to the Rick and Morty Universe!</h1>
+        <p class="text-lg max-w-lg">
+            Dive into the world of infinite universes, meet quirky characters, and explore strange
+            locations.
+        </p>
+    </section>
+
+    <!-- Links to Explore More Sections -->
+    <section class="explore-more py-16 px-6 bg-gray-800">
+        <h2 class="text-center text-3xl font-bold mb-10 text-gray-200">Explore the Universe</h2>
+        <div class="flex justify-center gap-8">
+            <a
+                routerLink="/characters"
+                class="cursor-pointer flex flex-col items-center px-6 py-4 bg-green-500 rounded-lg shadow-lg hover:bg-green-400 transition duration-200"
+            >
+                <span class="text-lg font-semibold">Characters</span>
+            </a>
+            <a
+                routerLink="/locations"
+                class="cursor-pointer flex flex-col items-center px-6 py-4 bg-blue-500 rounded-lg shadow-lg hover:bg-blue-400 transition duration-200"
+            >
+                <span class="text-lg font-semibold">Locations</span>
+            </a>
+            <a
+                routerLink="/episodes"
+                class="cursor-pointer flex flex-col items-center px-6 py-4 bg-purple-500 rounded-lg shadow-lg hover:bg-purple-400 transition duration-200"
+            >
+                <span class="text-lg font-semibold">Episodes</span>
+            </a>
+        </div>
+    </section>
+</div>
+
