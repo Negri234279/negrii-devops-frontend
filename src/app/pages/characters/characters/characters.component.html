@@ -1,0 +1,64 @@
+<h2 class="text-center text-3xl mb-6 font-bold text-gray-200">Characters</h2>
+
+<ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    @for (character of data().results; track character.id) {
+        <li
+            class="flex flex-col h-full w-full border border-gray-700 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 bg-gray-800"
+        >
+            <div class="relative h-48 overflow-hidden rounded-t-lg">
+                <img
+                    [src]="character.image"
+                    [alt]="character.name"
+                    class="object-cover w-full h-full transition-transform duration-300 transform hover:scale-110"
+                />
+            </div>
+            <div class="p-4 flex flex-col flex-grow">
+                <h3
+                    class="text-xl font-semibold text-gray-100 hover:text-green-400 transition-colors duration-200"
+                >
+                    <a [routerLink]="character.id.toString()">{{ character.name }}</a>
+                </h3>
+                <p class="text-gray-300 inline-flex items-center gap-2 mt-1">
+                    <span
+                        class="block w-3.5 h-3.5 rounded-full"
+                        [ngClass]="{
+                            'bg-green-400': character.status === 'Alive',
+                            'bg-red-400': character.status === 'Dead',
+                            'bg-yellow-400': character.status === 'unknown',
+                        }"
+                    ></span>
+                    <span>{{ character.status }}</span>
+                    <span>-</span>
+                    <span>{{ character.species }}</span>
+                </p>
+                <p class="text-gray-300 mt-2">
+                    <strong class="block text-gray-400">Last known location:</strong>
+                    {{ character.location.name }}
+                </p>
+                <p class="text-gray-300">
+                    <strong class="block text-gray-400">Origin:</strong>
+                    {{ character.origin.name }}
+                </p>
+            </div>
+        </li>
+    }
+</ul>
+
+<div class="grid grid-cols-2 gap-6 mt-6">
+    <button
+        [ngClass]="{'pointer-events-none': !hasPrevPage()}"
+        class="bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200"
+        [disabled]="!hasPrevPage()"
+        (click)="handlePreviousPage()"
+    >
+        Previous
+    </button>
+    <button
+        [ngClass]="{'pointer-events-none': !hasNextPage()}"
+        class="bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200"
+        [disabled]="!hasNextPage()"
+        (click)="handleNextPage()"
+    >
+        Next
+    </button>
+</div>
