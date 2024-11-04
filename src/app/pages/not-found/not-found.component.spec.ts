@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { ActivatedRoute } from '@angular/router'
+import { of } from 'rxjs'
 
 import { NotFoundComponent } from './not-found.component'
 
@@ -9,6 +11,15 @@ describe('NotFoundComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [NotFoundComponent],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useValue: {
+                        params: of({}),
+                        queryParams: of({}),
+                    },
+                },
+            ],
         }).compileComponents()
 
         fixture = TestBed.createComponent(NotFoundComponent)
