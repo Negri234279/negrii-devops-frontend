@@ -11,14 +11,14 @@
     </a>
 </header>
 
-<nav class="bg-slate-200 p-4 shadow-sm">
-    <ul class="flex gap-6 justify-center text-gray-800 font-medium">
+<nav class="bg-gray-800 p-4 shadow-sm">
+    <ul class="flex gap-6 justify-center text-gray-200 font-medium">
         @for (link of headerLinks; track link.url) {
-            <li class="hover:text-red-700 transition-colors">
+            <li>
                 <a
                     routerLink="{{ link.url }}"
-                    routerLinkActive="text-red-700"
-                    class="hover:underline focus:outline-none focus:ring-2 focus:ring-red-700"
+                    routerLinkActive="text-green-400"
+                    class="hover:text-green-400 transition-colors"
                 >
                     {{ link.text }}
                 </a>
@@ -27,6 +27,8 @@
     </ul>
 </nav>
 
-<main [ngClass]="{ 'p-6 container mx-auto': !isNotFound }">
-    <router-outlet></router-outlet>
+<main class="bg-gray-900">
+    <section [ngClass]="{ 'p-6 container mx-auto': !isNotFound }">
+        <router-outlet></router-outlet>
+    </section>
 </main>
