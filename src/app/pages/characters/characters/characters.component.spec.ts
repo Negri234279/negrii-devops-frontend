@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { CharactersComponent } from './characters.component'
-import { CharactersService } from '../libs/characters.service'
+import { CharactersService } from '../libs/services/characters-api.service'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 describe('CharactersComponent', () => {

@@ -1,8 +1,10 @@
-import { CommonModule } from '@angular/common'
-import { Component, inject, OnInit, signal } from '@angular/core'
+import { CommonModule, isPlatformBrowser } from '@angular/common'
+import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core'
 import { RouterLink } from '@angular/router'
 
-import { CharacterFilters, CharactersResponse, CharactersService } from '../libs/characters.service'
+import { CharactersService } from '../libs/characters.service'
+import { Character, CharacterFilters, CharactersResponse } from '../libs/@types/character'
+import { catchError, EMPTY } from 'rxjs'
 
 @Component({
     selector: 'app-characters',
@@ -12,12 +14,15 @@ import { CharacterFilters, CharactersResponse, CharactersService } from '../libs
 })
 export class CharactersComponent implements OnInit {
     private readonly _charactersService = inject(CharactersService)
+    private readonly platformId = inject(PLATFORM_ID)
 
     data = signal<CharactersResponse>({
-        info: { count: 0, pages: 0, next: null, prev: null },
-        results: [],
+        items: [],
+        total: 0,
+        next: null,
+        prev: null,
     })
-    filters = signal<Partial<CharacterFilters>>({ page: 1 })
+    filters = signal<Pick<CharacterFilters, 'page' | 'limit'>>({ page: 1, limit: 20 })
 
     ngOnInit(): void {
         this.loadData()
@@ -25,20 +30,24 @@ export class CharactersComponent implements OnInit {
 
     handlePageChange(page: number): void {
         this.filters.update((filters) => ({ ...filters, page }))
+
         this.loadData()
+        this.scrollToTop()
     }
 
     hasNextPage(): boolean {
-        return this.data().info?.next !== null
+        return this.data()?.next !== null
     }
 
     handleNextPage(): void {
         this.filters.update((filters) => ({ ...filters, page: (filters.page || 0) + 1 }))
+
         this.loadData()
+        this.scrollToTop()
     }
 
     hasPrevPage(): boolean {
-        return this.data().info?.prev !== null
+        return this.data()?.prev !== null
     }
 
     handlePreviousPage(): void {
@@ -46,12 +55,27 @@ export class CharactersComponent implements OnInit {
             const page = filters.page || 0
             return { ...filters, page: page > 1 ? page - 1 : 1 }
         })
+
         this.loadData()
+        this.scrollToTop()
+    }
+
+    getAvatar(image: Character['avatar']): string {
+        return this._charactersService.avatar(image)
     }
 
     private loadData(): void {
-        this._charactersService.find(this.filters()).subscribe((response) => {
-            this.data = signal(response)
-        })
+        this._charactersService
+            .find(this.filters())
+            .pipe(catchError(() => EMPTY))
+            .subscribe((response) => {
+                this.data = signal(response)
+            })
+    }
+
+    private scrollToTop(): void {
+        if (isPlatformBrowser(this.platformId)) {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
     }
 }
