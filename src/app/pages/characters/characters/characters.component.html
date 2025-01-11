@@ -1,13 +1,13 @@
 <h2 class="text-center text-3xl mb-6 font-bold text-gray-200">Characters</h2>
 
 <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    @for (character of data().results; track character.id) {
+    @for (character of data().items; track character.id) {
         <li
             class="flex flex-col h-full w-full border border-gray-700 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 bg-gray-800"
         >
             <div class="relative h-48 overflow-hidden rounded-t-lg">
                 <img
-                    [src]="character.image"
+                    [src]="getAvatar(character.avatar)"
                     [alt]="character.name"
                     class="object-cover w-full h-full transition-transform duration-300 transform hover:scale-110"
                 />
@@ -46,7 +46,7 @@
 
 <div class="grid grid-cols-2 gap-6 mt-6">
     <button
-        [ngClass]="{'pointer-events-none': !hasPrevPage()}"
+        [ngClass]="{ 'pointer-events-none': !hasPrevPage() }"
         class="bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200"
         [disabled]="!hasPrevPage()"
         (click)="handlePreviousPage()"
@@ -54,7 +54,7 @@
         Previous
     </button>
     <button
-        [ngClass]="{'pointer-events-none': !hasNextPage()}"
+        [ngClass]="{ 'pointer-events-none': !hasNextPage() }"
         class="bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200"
         [disabled]="!hasNextPage()"
         (click)="handleNextPage()"
