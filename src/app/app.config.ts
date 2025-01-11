@@ -4,6 +4,8 @@ import { provideClientHydration } from '@angular/platform-browser'
 import { provideRouter, withComponentInputBinding, withViewTransitions } from '@angular/router'
 
 import { routes } from './app.routes'
+import { appInitializerConfigProvider } from './libs/providers/config-app.provider'
+import { CharactersServiceProvider } from './pages/characters/libs/providers/characters-service.provider'
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -11,5 +13,7 @@ export const appConfig: ApplicationConfig = {
         provideRouter(routes, withComponentInputBinding(), withViewTransitions()),
         provideClientHydration(),
         provideHttpClient(withFetch()),
+        appInitializerConfigProvider,
+        CharactersServiceProvider,
     ],
 }
